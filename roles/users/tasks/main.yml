@@ -1,0 +1,5 @@
+---
+- name: Create user accounts for named sites
+  user:
+    name: wordpress
+    state: present

@@ -1,0 +1,5 @@
+[virtualpress]
+localhost       ansible_connection=local
+
+[virtualpress:vars]
+ansible_python_interpreter=/usr/bin/python3

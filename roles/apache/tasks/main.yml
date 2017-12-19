@@ -1,0 +1,82 @@
+---
+- name: Install Apache and its modules
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - apache2
+    - libapache2-mod-fastcgi
+
+- name: Disable unneeded modules
+  apache2_module:
+    name: "{{ item }}"
+    state: absent
+    force: true
+  with_items:
+    - access_compat
+    - autoindex
+    - status
+  notify:
+    - restart apache
+
+- name: Activate necessary modules
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rewrite
+    - fastcgi
+    - actions
+  notify:
+    - restart apache
+    
+- name: Install custom configurations
+  copy:
+    src: "{{ item }}"
+    dest: /etc/apache2/conf-available
+  with_items:
+    - "git.conf"
+    - "fpm-permissions.conf"
+  notify:
+    - restart apache
+    
+- name: Activate custom configurations    
+  shell: a2enconf {{ item }}
+  with_items:
+    - git
+    - fpm-permissions
+  notify:
+    - restart apache
+    
+- name: Deactivate unnecessary configurations
+  shell: a2disconf {{ item }}
+  with_items:
+    - serve-cgi-bin
+    - localized-error-pages
+    - security
+    - charset
+
+- name: Deactivate default vhost
+  command: a2dissite 000-default
+  notify:
+    - restart apache
+
+- name: Create logging directory/directories for sites
+  file:
+    path: /var/log/apache2/vhosts/wordpress
+    state: directory
+
+- name: Install logrotate configuration for sites
+  copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.d/virtualhosts
+
+- name: Setup vhosts for sites
+  template:
+    src: vhost.conf
+    dest: /etc/apache2/sites-available/wordpress.conf
+
+- name: Activate new vhosts
+  command: a2ensite wordpress
+  notify:
+    - restart apache

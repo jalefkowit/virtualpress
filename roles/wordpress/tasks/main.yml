@@ -1,0 +1,53 @@
+---
+- name: Download and install latest WordPress
+  command: wp core download --path=/vagrant/wordpress --locale=en_US --version=latest
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Set WordPress permissions
+  file:
+    path: /vagrant/wordpress
+    owner: www-data
+    group: www-data
+    mode: 0755
+    recurse: yes
+    state: directory
+
+- name: Symlink installed WordPress into web root
+  file:
+    src: /vagrant/wordpress
+    path: /var/www/wordpress
+    state: link
+
+- name: Create database for WordPress
+  mysql_db:
+    name: wordpress
+    state: present
+    encoding: utf8mb4
+    collation: utf8mb4_unicode_ci
+
+- name: Generate random password for WordPress MySQL user
+  shell: apg -a 1 -n 1 -m 24 -x 24 -M NCL
+  register: wp_db_password
+  no_log: True
+
+- name: Create WordPress MySQL user
+  mysql_user:
+    name: wordpress
+    password: "{{ wp_db_password.stdout }}"
+    state: present
+    priv: "wordpress.*:ALL"
+    update_password: always
+    
+- name: Generate wp-config.php
+  shell: wp config create --dbname=wordpress --dbuser=wordpress --dbpass={{ wp_db_password.stdout }} --dbcharset=utf8mb4 --dbcollate=utf8mb4_unicode_ci --locale=en_US --extra-php --force
+  become: true
+  become_method: sudo
+  become_user: www-data
+  args:
+    chdir: /vagrant/wordpress
+    stdin: |
+      define( 'WP_DEBUG', true );
+      define( 'SAVEQUERIES', true );

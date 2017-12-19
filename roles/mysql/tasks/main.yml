@@ -1,0 +1,62 @@
+---
+- name: Install MySQL client, server and related libraries
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mysql-client-5.7
+    - mysql-server-5.7
+    - python3-mysqldb
+  notify:
+    - restart mysql
+    
+- name: Generate random password for MySQL root user
+  shell: apg -a 1 -n 1 -m 24 -x 24 -M NCL
+  register: mysql_root_password
+  no_log: True
+    
+- name: Setup MySQL root password
+  mysql_user:
+    name: "root"
+    password: "{{ mysql_root_password.stdout }}"
+    host: "{{ item }}"
+    state: present
+  with_items:
+  - "{{ ansible_hostname }}"
+  - 127.0.0.1
+  - ::1
+  - localhost
+  notify:
+    - restart mysql
+  
+- name: Setup MySQL creds for root user
+  template:
+    src: "root.my.cnf"
+    dest: "/root/.my.cnf"
+    owner: "root"
+    mode: 0600
+    
+- name: Delete blank MySQL users
+  mysql_user:
+    name: ""
+    host: "{{ item }}"
+    state: absent
+  with_items:
+  - "{{ ansible_hostname }}"
+  - 127.0.0.1
+  - ::1
+  - localhost
+
+- name: Drop MySQL test database
+  mysql_db: 
+    name: test
+    state: absent
+
+- name: Install MySQL UTF-8 configuration
+  copy:
+    src: utf8.cnf
+    dest: /etc/mysql/mysql.conf.d/utf8.cnf
+  notify:
+    - restart mysql
+
+

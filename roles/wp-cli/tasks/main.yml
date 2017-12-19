@@ -1,0 +1,17 @@
+---
+- name: Download Phar package
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: /tmp/wp-cli.phar
+
+- name: Rename and install
+  copy:
+    remote_src: yes
+    src: /tmp/wp-cli.phar
+    dest: /usr/local/bin/wp
+    mode: 0755
+
+- name: Delete original copy
+  file:
+    path: /tmp/wp-cli.phar
+    state: absent

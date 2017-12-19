@@ -1,0 +1,5 @@
+.vagrant
+group_vars
+/wordpress
+*.komodoproject
+.idea

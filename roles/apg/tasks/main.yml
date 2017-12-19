@@ -1,0 +1,5 @@
+---
+- name: Install apg for password generation
+  apt:
+    name: apg
+    state: latest

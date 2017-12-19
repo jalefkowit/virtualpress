@@ -1,0 +1,44 @@
+---
+- name: Install PHP and its modules
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - php7.0
+    - php7.0-cli
+    - php7.0-curl
+    - php7.0-gd
+    - php-imagick
+    - php-xdebug
+    - php7.0-mysql
+    - php7.0-xmlrpc
+    - php7.0-xml
+
+- name: Install PHP config customizations
+  copy:
+    src: "{{ item }}"
+    dest: /etc/php/7.0/mods-available/{{ item }}
+    owner: root
+    group: root
+    force: yes
+  with_items:
+    - virtualpress-php-settings.ini
+    - virtualpress-xdebug-settings.ini
+
+- name: Activate PHP config customizations
+  file:
+    src: /etc/php/7.0/mods-available/{{ item }}
+    path: /etc/php/7.0/fpm/conf.d/999-{{ item }}
+    state: link
+  with_items:
+    - virtualpress-php-settings.ini
+    - virtualpress-xdebug-settings.ini
+  notify:
+    - restart php
+
+- name: Setup FPM pools for named sites
+  template:
+    src: pool.conf
+    dest: /etc/php/7.0/fpm/pool.d/wordpress.conf
+  notify:
+    - restart php

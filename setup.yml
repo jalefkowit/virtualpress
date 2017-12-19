@@ -1,0 +1,34 @@
+---
+- hosts: virtualpress
+  become: true
+  become_user: root
+  become_method: sudo
+  pre_tasks:
+      - name: Update apt cache
+        apt:
+          update_cache: yes
+      - name: Install software-properties-common
+        apt:
+          name: software-properties-common
+          state: latest
+      - name: Install common utilities
+        apt:
+          name: "{{ item }}"
+          state: latest
+        with_items:
+          - unzip
+          - htop
+      - name: Update installed software to latest versions
+        apt:
+          upgrade: dist
+      - name: Add Vagrant user to www-data group
+        user:
+          name: ubuntu
+          groups: www-data
+          append: yes
+  roles:
+    - mysql
+    - apache
+    - php
+    - wp-cli
+    - wordpress

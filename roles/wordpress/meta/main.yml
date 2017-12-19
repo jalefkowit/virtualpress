@@ -1,0 +1,7 @@
+---
+dependencies:
+  - { role: apache }
+  - { role: mysql }
+  - { role: php }
+  - { role: wp-cli }
+  - { role: users }
