@@ -51,9 +51,7 @@ Then just cd into that directory and run the command `vagrant up`, and your VM s
 
 **If you use the default box, no configuration should be required to get up and running.** However, in the file named `Vagrantfile`, you *may* wish to change the following:
 
-* **If you want to use an IP address other than 192.168.50.50,** replace that address with the one you wish to use in two places:
-    * `Vagrantfile`, on line 9
-    * `virtualpress-inventory`, on line 2
+* **If you want to use an IP address other than 192.168.50.50,** replace that address with the one you wish to use in `Vagrantfile` on line 9.
 
 If you wish to modify or extend the basic logic that provisions the system -- add new packages, say -- all that logic is available to you. Everything is rolled up into an [Ansible "playbook"](http://docs.ansible.com/ansible/latest/playbooks_intro.html) located in the file setup.yml, with configuration for individual components in the system broken out into [Ansible "roles"](http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html) for modularity. For more information on how to work with Ansible, consult [the Ansible documentation.](http://docs.ansible.com/ansible/latest/index.html)
 
