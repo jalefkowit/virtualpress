@@ -3,3 +3,4 @@ group_vars
 /wordpress
 *.komodoproject
 .idea
+/setup.retry
