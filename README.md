@@ -36,6 +36,7 @@ Together with the prerequisites listed above, the scripts contained herein will 
 * Has a MySQL database (name: "wordpress") and database user (name: "wordpress") for WordPress to make use of
 * Has a configuration file in `/root/.my.cnf` to allow the root user to log into MySQL as root without needing to enter a username or password
 * Has an Apache virtual host configured and enabled to serve WordPress
+* Has [WP-CLI](http://wp-cli.org/) installed at /usr/local/bin/wp
 
 So, once the box is provisioned, all you need to do is go to 192.168.50.50 in your browser to begin the famous WordPress 5-minute install.
 
