@@ -31,6 +31,7 @@ Together with the prerequisites listed above, the scripts contained herein will 
     * php7.0-mysql
     * php7.0-xmlrpc
     * php7.0-xml
+	* php7.0-mbstring
     * php-xdebug (ready for remote debugging on port 10000; use the IDE key "virtualpress")
 * Installs the latest version of the WordPress software in /vagrant, so you can work with local files via your favorite editor/IDE; sets up symlink to it at /var/www/wordpress`so Apache can find it
 * Has a MySQL database (name: "wordpress") and database user (name: "wordpress") for WordPress to make use of
