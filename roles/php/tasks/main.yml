@@ -13,6 +13,7 @@
     - php7.0-mysql
     - php7.0-xmlrpc
     - php7.0-xml
+    - php7.0-mbstring
 
 - name: Install PHP config customizations
   copy:
