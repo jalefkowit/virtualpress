@@ -55,6 +55,12 @@ Then just cd into that directory and run the command `vagrant up`, and your VM s
 
 * **If you want to use an IP address other than 192.168.50.50,** replace that address with the one you wish to use in `Vagrantfile` on line 9.
 
+* By default, Vagrant gives the VirtualBox environments it creates semi-randomized names. This can make it difficult later on to figure out which VirtualBox resources (such as virtual hard drives) are connected to which VirtualPress project you created in the past. To make this easier, **[it is possible in the Vagrantfile to specify a name for the VirtualBox VM that Vagrantfile will create](https://www.vagrantup.com/docs/virtualbox/configuration.html)**. To use this feature in your VirtualPress project, add the following within the `config.vm.provider :virtualbox do` / `end` block:
+
+	`vb.name = "<NAME_HERE>"`
+
+... replacing `<NAME_HERE>` with whatever name you wish to assign to the VM.  
+
 If you wish to modify or extend the basic logic that provisions the system -- add new packages, say -- all that logic is available to you. Everything is rolled up into an [Ansible "playbook"](http://docs.ansible.com/ansible/latest/playbooks_intro.html) located in the file setup.yml, with configuration for individual components in the system broken out into [Ansible "roles"](http://docs.ansible.com/ansible/latest/playbooks_reuse_roles.html) for modularity. For more information on how to work with Ansible, consult [the Ansible documentation.](http://docs.ansible.com/ansible/latest/index.html)
 
 ## License
