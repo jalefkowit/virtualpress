@@ -1,12 +1,13 @@
 ---
 - name: Install MySQL client, server and related libraries
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: latest
-  with_items:
-    - mysql-client-5.7
-    - mysql-server-5.7
-    - python3-mysqldb
+  vars:
+    packages:
+      - mysql-client-5.7
+      - mysql-server-5.7
+      - python3-mysqldb
   notify:
     - restart mysql
     

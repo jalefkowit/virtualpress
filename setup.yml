@@ -13,11 +13,12 @@
           state: latest
       - name: Install common utilities
         apt:
-          name: "{{ item }}"
+          name: "{{ packages }}"
           state: latest
-        with_items:
-          - unzip
-          - htop
+        vars:
+          packages:
+            - unzip
+            - htop
       - name: Update installed software to latest versions
         apt:
           upgrade: dist

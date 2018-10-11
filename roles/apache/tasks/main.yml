@@ -1,12 +1,13 @@
 ---
 - name: Install Apache and its modules
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: latest
-  with_items:
-    - apache2
-    - libapache2-mod-fastcgi
-
+  vars:
+    packages:
+      - apache2
+      - libapache2-mod-fastcgi
+  
 - name: Disable unneeded modules
   apache2_module:
     name: "{{ item }}"

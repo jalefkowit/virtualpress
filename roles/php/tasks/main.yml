@@ -1,19 +1,21 @@
 ---
 - name: Install PHP and its modules
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: latest
-  with_items:
-    - php7.0
-    - php7.0-cli
-    - php7.0-curl
-    - php7.0-gd
-    - php-imagick
-    - php-xdebug
-    - php7.0-mysql
-    - php7.0-xmlrpc
-    - php7.0-xml
-    - php7.0-mbstring
+  vars:
+    packages:
+      - php7.0
+      - php7.0-cli
+      - php7.0-curl
+      - php7.0-gd
+      - php-imagick
+      - php-xdebug
+      - php7.0-mysql
+      - php7.0-xmlrpc
+      - php7.0-xml
+      - php7.0-mbstring
+
 
 - name: Install PHP config customizations
   copy:
