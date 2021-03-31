@@ -6,8 +6,7 @@
   vars:
     packages:
       - apache2
-      - libapache2-mod-fastcgi
-  
+
 - name: Disable unneeded modules
   apache2_module:
     name: "{{ item }}"
@@ -26,7 +25,8 @@
     state: present
   with_items:
     - rewrite
-    - fastcgi
+    - proxy
+    - proxy_fcgi
     - actions
   notify:
     - restart apache

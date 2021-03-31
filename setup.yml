@@ -19,6 +19,7 @@
           packages:
             - unzip
             - htop
+            - acl
       - name: Update installed software to latest versions
         apt:
           upgrade: dist

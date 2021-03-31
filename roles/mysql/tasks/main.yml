@@ -5,8 +5,8 @@
     state: latest
   vars:
     packages:
-      - mysql-client-5.7
-      - mysql-server-5.7
+      - mysql-client
+      - mysql-server
       - python3-mysqldb
   notify:
     - restart mysql

@@ -5,22 +5,27 @@
     state: latest
   vars:
     packages:
-      - php7.0
-      - php7.0-cli
-      - php7.0-curl
-      - php7.0-gd
+      - php7.4
+      - php7.4-fpm
+      - php7.4-cli
+      - php7.4-curl
+      - php7.4-gd
       - php-imagick
       - php-xdebug
-      - php7.0-mysql
-      - php7.0-xmlrpc
-      - php7.0-xml
-      - php7.0-mbstring
+      - php7.4-mysql
+      - php7.4-xmlrpc
+      - php7.4-xml
+      - php7.4-mbstring
 
+- name: Activate Apache configuration
+  shell: a2enconf php7.4-fpm
+  notify:
+    - restart apache
 
 - name: Install PHP config customizations
   copy:
     src: "{{ item }}"
-    dest: /etc/php/7.0/mods-available/{{ item }}
+    dest: /etc/php/7.4/mods-available/{{ item }}
     owner: root
     group: root
     force: yes
@@ -30,8 +35,8 @@
 
 - name: Activate PHP config customizations
   file:
-    src: /etc/php/7.0/mods-available/{{ item }}
-    path: /etc/php/7.0/fpm/conf.d/999-{{ item }}
+    src: /etc/php/7.4/mods-available/{{ item }}
+    path: /etc/php/7.4/fpm/conf.d/999-{{ item }}
     state: link
   with_items:
     - virtualpress-php-settings.ini
@@ -42,6 +47,6 @@
 - name: Setup FPM pools for named sites
   template:
     src: pool.conf
-    dest: /etc/php/7.0/fpm/pool.d/wordpress.conf
+    dest: /etc/php/7.4/fpm/pool.d/wordpress.conf
   notify:
     - restart php
