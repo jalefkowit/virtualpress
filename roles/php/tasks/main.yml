@@ -17,6 +17,8 @@
       - php7.4-xml
       - php7.4-mbstring
       - php7.4-bcmath
+      - php7.4-intl
+      - php7.4-zip
 
 - name: Activate Apache configuration
   shell: a2enconf php7.4-fpm
