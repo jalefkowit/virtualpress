@@ -3,7 +3,7 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
+  config.vm.box = "ubuntu/jammy64"
   config.vm.network :private_network, ip: "192.168.50.50"
   config.vm.provision "ansible_local" do |ansible|
     ansible.install = "true"
