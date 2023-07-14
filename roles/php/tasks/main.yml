@@ -5,30 +5,30 @@
     state: latest
   vars:
     packages:
-      - php7.4
-      - php7.4-fpm
-      - php7.4-cli
-      - php7.4-curl
-      - php7.4-gd
+      - php8.1
+      - php8.1-fpm
+      - php8.1-cli
+      - php8.1-curl
+      - php8.1-gd
       - php-imagick
       - php-xdebug
-      - php7.4-mysql
-      - php7.4-xmlrpc
-      - php7.4-xml
-      - php7.4-mbstring
-      - php7.4-bcmath
-      - php7.4-intl
-      - php7.4-zip
+      - php8.1-mysql
+      - php8.1-xmlrpc
+      - php8.1-xml
+      - php8.1-mbstring
+      - php8.1-bcmath
+      - php8.1-intl
+      - php8.1-zip
 
 - name: Activate Apache configuration
-  shell: a2enconf php7.4-fpm
+  shell: a2enconf php8.1-fpm
   notify:
     - restart apache
 
 - name: Install PHP config customizations
   copy:
     src: "{{ item }}"
-    dest: /etc/php/7.4/mods-available/{{ item }}
+    dest: /etc/php/8.1/mods-available/{{ item }}
     owner: root
     group: root
     force: yes
@@ -38,8 +38,8 @@
 
 - name: Activate PHP config customizations
   file:
-    src: /etc/php/7.4/mods-available/{{ item }}
-    path: /etc/php/7.4/fpm/conf.d/999-{{ item }}
+    src: /etc/php/8.1/mods-available/{{ item }}
+    path: /etc/php/8.1/fpm/conf.d/999-{{ item }}
     state: link
   with_items:
     - virtualpress-php-settings.ini
@@ -50,6 +50,6 @@
 - name: Setup FPM pools for named sites
   template:
     src: pool.conf
-    dest: /etc/php/7.4/fpm/pool.d/wordpress.conf
+    dest: /etc/php/8.1/fpm/pool.d/wordpress.conf
   notify:
     - restart php
