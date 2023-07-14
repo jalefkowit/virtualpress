@@ -9,7 +9,7 @@ To make use of these files, you'll need to have the following prerequisites inst
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](http://www.vagrantup.com/)
 
-Any Vagrant-based VM needs to start with a Vagrant "box" file -- a canned image of a base system that Vagrant can use as the starting point for further customization. **By default, these scripts use the official Vagrant image distributed by Ubuntu of the 64-bit version of Ubuntu 20.04 LTS, "Focal Fossa," so you do not need to download or install anything further if you are satisfied with that version.** As of this writing (March 30, 2021) that file is [distributed here](https://app.vagrantup.com/ubuntu/boxes/focal64).
+Any Vagrant-based VM needs to start with a Vagrant "box" file -- a canned image of a base system that Vagrant can use as the starting point for further customization. **By default, these scripts use the official Vagrant image distributed by Ubuntu of the 64-bit version of Ubuntu 22.04 LTS, "Jammy Jellyfish," so you do not need to download or install anything further if you are satisfied with that version.** As of this writing (July 14, 2023) that file is [distributed here](https://app.vagrantup.com/ubuntu/boxes/jammy64).
 
 If you want to build your VM from a different version or distro, check [Vagrant Cloud](https://app.vagrantup.com/boxes/search) to find a box you wish to use. If you wish to use a box other than the default, just install the box (if it's not hosted at Vagrant Cloud) and update the Vagrantfile to point to the particular box you wish to use.
 
@@ -22,16 +22,20 @@ Together with the prerequisites listed above, the scripts contained herein will 
 * Is configured with a static IP address on your local LAN (default 192.168.50.50) so you don't need to constantly be looking up new DHCP-assigned addresses each time it restarts
 * Has a complete MySQL 8 setup (client and server) installed
 * Has a complete Apache 2 setup installed (with mod_rewrite)
-* Has a complete PHP 7 setup (both PHP-FPM and CLI versions) installed, with the following modules:
-    * php7.4
-    * php7.4-cli
-    * php7.4-curl
-    * php7.4-gd
+* Has a complete PHP 8.1 setup (both PHP-FPM and CLI versions) installed, with the following modules:
+    * php8.1
+    * php8.1-fpm
+    * php8.1-cli
+    * php8.1-curl
+    * php8.1-gd
     * php-imagick
-    * php7.4-mysql
-    * php7.4-xmlrpc
-    * php7.4-xml
-    * php7.4-mbstring
+    * php8.1-mysql
+    * php8.1-xmlrpc
+    * php8.1-xml
+    * php8.1-mbstring
+    * php8.1-bcmath
+    * php8.1-intl
+    * php8.1-zip
     * php-xdebug (ready for remote debugging on port 9000; use the IDE key "virtualpress")
 * Installs the latest version of the WordPress software in /vagrant, so you can work with local files via your favorite editor/IDE; sets up symlink to it at /var/www/wordpress`so Apache can find it
 * Has a MySQL database (name: "wordpress") and database user (name: "wordpress") for WordPress to make use of
