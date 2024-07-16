@@ -25,7 +25,7 @@
           upgrade: dist
       - name: Add Vagrant user to www-data group
         user:
-          name: ubuntu
+          name: vagrant
           groups: www-data
           append: yes
   roles:

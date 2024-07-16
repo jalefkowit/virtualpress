@@ -2,15 +2,15 @@
 - name: Download and install latest WordPress
   command: wp core download --path=/vagrant/wordpress --locale=en_US --version=latest
   become: true
-  become_method: sudo
-  become_user: www-data
+  become_method: su
+  become_user: vagrant
   ignore_errors: true
 
 - name: Set WordPress permissions
   file:
     path: /vagrant/wordpress
-    owner: www-data
-    group: www-data
+    owner: vagrant
+    group: vagrant
     mode: 0755
     recurse: yes
     state: directory
@@ -45,7 +45,7 @@
   shell: wp config create --dbname=wordpress --dbuser=wordpress --dbpass={{ wp_db_password.stdout }} --dbcharset=utf8mb4 --dbcollate=utf8mb4_unicode_ci --locale=en_US --extra-php --force
   become: true
   become_method: sudo
-  become_user: www-data
+  become_user: vagrant
   args:
     chdir: /vagrant/wordpress
     stdin: |

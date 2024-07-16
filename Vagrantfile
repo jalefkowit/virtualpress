@@ -17,5 +17,5 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
-  config.vm.synced_folder ".", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775", "fmode=775"]
+  config.vm.synced_folder ".", "/vagrant", owner:"vagrant", group:"vagrant", mount_options:["dmode=775", "fmode=775"]
 end
